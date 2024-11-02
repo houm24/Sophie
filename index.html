@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achat de Coupons</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header {
+            background-color: #0073e6;
+            color: white;
+            padding: 10px;
+            width: 100%;
+            text-align: center;
+        }
+        main {
+            width: 90%;
+            max-width: 600px;
+            margin-top: 20px;
+        }
+        section {
+            background: #fff;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+        h2 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #0073e6;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #005bb5;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Achat de Coupons</h1>
+    </header>
+
+    <main>
+        <!-- Section de parrainage -->
+        <section id="parrainage">
+            <h2>Entrez le Code de Parrainage</h2>
+            <input type="text" id="codeParrainage" placeholder="Code de parrainage">
+            <button onclick="validerParrainage()">Valider le code</button>
+        </section>
+
+        <!-- Section d'achat de coupons -->
+        <section id="achat">
+            <h2>Acheter un Coupon</h2>
+            <label for="numero">Entrez votre numéro :</label>
+            <input type="text" id="numero" placeholder="Votre numéro">
+            <label for="montant">Montant : 100 FCFA</label>
+            <button onclick="acheterCoupon()">Acheter</button>
+        </section>
+
+        <!-- Section du solde -->
+        <section id="solde">
+            <h2>Votre Solde</h2>
+            <p id="affichageSolde">0 FCFA</p>
+            <button onclick="retirerSolde()">Retirer</button>
+        </section>
+
+        <!-- Section des transactions -->
+        <section id="transactions">
+            <h2>Mes Transactions</h2>
+            <ul id="transactionList">
+                <!-- Les transactions s'afficheront ici -->
+            </ul>
+        </section>
+    </main>
+
+    <script>
+        let solde = 0; // Initialisation du solde de l'utilisateur
+        let transactions = []; // Liste des transactions
+
+        // Fonction pour acheter un coupon
+        function acheterCoupon() {
+            const numero = document.getElementById('numero').value;
+            if (numero) {
+                transactions.push({ type: 'Achat', montant: 100, numero });
+                solde += 40; // Ajoute 40 FCFA au solde de l'utilisateur (40% de 100)
+                document.getElementById('affichageSolde').textContent = `${solde} FCFA`;
+                afficherTransactions();
+                alert("Coupon acheté avec succès !");
+            } else {
+                alert("Veuillez entrer votre numéro.");
+            }
+        }
+
+        // Fonction pour retirer le solde
+        function retirerSolde() {
+            if (solde >= 100) { // Exemple : Retrait minimum de 100 FCFA
+                solde = 0;
+                document.getElementById('affichageSolde').textContent = `${solde} FCFA`;
+                alert("Retrait effectué avec succès !");
+            } else {
+                alert("Solde insuffisant pour un retrait.");
+            }
+        }
+
+        // Fonction pour valider le code de parrainage
+        function validerParrainage() {
+            const code = document.getElementById('codeParrainage').value;
+            if (code) {
+                alert("Code de parrainage validé !");
+            } else {
+                alert("Veuillez entrer un code de parrainage.");
+            }
+        }
+
+        // Fonction pour afficher les transactions
+        function afficherTransactions() {
+            const transactionList = document.getElementById('transactionList');
+            transactionList.innerHTML = ''; // Réinitialise la liste des transactions
+
+            transactions.forEach((transaction, index) => {
+                const li = document.createElement('li');
+                li.textContent = `${transaction.type} de ${transaction.montant} FCFA pour le numéro ${transaction.numero}`;
+                transactionList.appendChild(li);
+            });
+        }
+    </script>
+
+</body>
+</html>
